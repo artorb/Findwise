@@ -35,9 +35,9 @@ public class Main {
             System.exit(1);
         }
 
-        DocumentBuilder db = new DocumentBuilder();
         try {
             List<Path> filesFromDir = FileLoader.getFilesFromDir(path);
+            DocumentBuilder db = new DocumentBuilder();
             List<Document> documents = db.filesToDocuments(filesFromDir);
 
             var result = SearchEngine.search(documents, query);
