@@ -17,7 +17,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
         var path = scan.nextLine();
-        if (!FileLoader.pathIsValid(path) || path.isEmpty() || path.isBlank()) {
+        if (!FileLoader.pathIsValid(path)) {
             System.out.println("Path " + path + " doesn't exist or incorrect!");
             System.exit(1);
         }

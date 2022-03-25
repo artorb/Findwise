@@ -44,6 +44,8 @@ public class FileLoader {
      * @throws IOException
      */
     public static boolean pathIsValid(String path) throws IOException {
+        if (path.isEmpty() || path.isBlank())
+            return false;
         for (char c : path.toCharArray()) {
             if (c == '<' || c == '>')
                 return false;
