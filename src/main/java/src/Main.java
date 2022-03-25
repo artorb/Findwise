@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("\u001B[40m Please provide file path: \u001B[0m\n");
         DocumentBuilder db = new DocumentBuilder();
         Scanner scan = new Scanner(System.in);
 
         var path = scan.nextLine();
-        if (!FileLoader.validatePath(path) || path.isEmpty()) {
-            System.out.println("Path " + path + " doesn't exist!");
+        if (!FileLoader.pathIsValid(path) || path.isEmpty() || path.isBlank()) {
+            System.out.println("Path " + path + " doesn't exist or incorrect!");
             System.exit(1);
         }
 
@@ -31,6 +31,10 @@ public class Main {
 
         System.out.println("\u001B[40m Provide searched term: \u001B[0m\n");
         var query = scan.nextLine();
+        if (!validQuery(query)) {
+            System.out.println("Invalid query");
+            System.exit(1);
+        }
 
         try {
             List<Path> filesFromDir = FileLoader.getFilesFromDir(path);
@@ -45,5 +49,9 @@ public class Main {
         }
 
         scan.close();
+    }
+
+    private static boolean validQuery(String query) {
+        return !query.isEmpty() && !query.isBlank();
     }
 }

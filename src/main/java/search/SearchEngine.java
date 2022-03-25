@@ -16,7 +16,7 @@ public class SearchEngine {
     private SearchEngine() {
     }
 
-    public static SearchResult search(List<Document> documents, String query) {
+    public static Searchable search(List<Document> documents, String query) {
         List<Document> presentInDocuments = filterPresentDocuments(documents, query);
 
         List<InvertedIndex> searchResults = new ArrayList<>();
@@ -28,12 +28,14 @@ public class SearchEngine {
 
             InvertedIndex result = new InvertedIndex(tf, idf, tfIdf, document, query);
             searchResults.add(result);
-            System.out.println("tf " + tf + " idf " + idf + " tfIdf " + tfIdf);
         }
 
         var presentDocumentNames = getTermPresentFilesNames(searchResults);
+        if (presentDocumentNames.size() == 0) {
+            return new SearchResultFailed(query);
+        }
 
-        return new SearchResult(query, presentDocumentNames);
+        return new SearchResultSuccess(query, presentDocumentNames);
     }
 
     private static List<Document> filterPresentDocuments(List<Document> documents, String query) {
@@ -43,7 +45,7 @@ public class SearchEngine {
     }
 
     /**
-     * @param searchResults inverted index data structutre
+     * @param searchResults inverted index data structure
      * @return a list of document the term is present in
      * sorted by TF-IDF
      */
