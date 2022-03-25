@@ -13,11 +13,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException {
         System.out.println("\u001B[40m Please provide file path: \u001B[0m\n");
-        DocumentBuilder db = new DocumentBuilder();
         Scanner scan = new Scanner(System.in);
 
         var path = scan.nextLine();
-        if (!FileLoader.pathIsValid(path) || path.isEmpty() || path.isBlank()) {
+        if (!FileLoader.pathIsValid(path)) {
             System.out.println("Path " + path + " doesn't exist or incorrect!");
             System.exit(1);
         }
@@ -36,6 +35,7 @@ public class Main {
             System.exit(1);
         }
 
+        DocumentBuilder db = new DocumentBuilder();
         try {
             List<Path> filesFromDir = FileLoader.getFilesFromDir(path);
             List<Document> documents = db.filesToDocuments(filesFromDir);
